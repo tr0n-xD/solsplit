@@ -3,7 +3,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import "./App.css";
-import Welcome from "./Welcome";
+import MainScreen from "./MainScreen";
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -45,7 +45,7 @@ export interface Wallet {
 
 export const WalletContext = React.createContext<Wallet>(null!);
 
-export default function App(props: {screen: any}) {
+export default function App(props: {view: any}) {
   const [provider, setProvider] = useState<PhantomProvider | undefined>(undefined);
   const [walletKey, setWalletKey] = useState<string | undefined>(undefined);
 
@@ -100,8 +100,8 @@ export default function App(props: {screen: any}) {
   return (
       <WalletContext.Provider value={wallet}>
           <div className="App">
-            { (props.screen === 'welcome') && <Welcome panel='main'/> }
-            { (props.screen === 'create') && <Welcome panel='create'/> }
+            { (props.view === 'welcome') && <MainScreen view='main'/> }
+            { (props.view === 'create') && <MainScreen view='create'/> }
           </div>
       </WalletContext.Provider>
   );

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { WalletContext } from "./App";
+import { WalletContext } from "../App";
 
 export default function WalletPanel() {
     let wallet = React.useContext(WalletContext);
@@ -21,9 +21,7 @@ export default function WalletPanel() {
                     </div>
                 </div>
                 :
-                <button className='blueButton'
-                        style={{fontSize: "15px", width: '150px', padding: "5px 10px 5px 10px", borderRadius: "5px"}}
-                        onClick={wallet.connect}>
+                <button className='blueButton' onClick={wallet.connect}>
                     CONNECT WALLET
                 </button>
             }

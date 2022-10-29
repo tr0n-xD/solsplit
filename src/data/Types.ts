@@ -1,6 +1,7 @@
 
 export interface Participant {
-    walletKey: string,
+    id: number,
     name: string,
+    walletKey: string,
     share: number,
 }

@@ -64,15 +64,14 @@ a:link, a:visited {
 
 
 .textInput {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
-  width: 220px;
   padding: 3px;
   border: solid 2px #48c5c8;
   border-radius: 10px;
-  background-color: black;
-  color: lightblue;
+  background-color: greenyellow;
+  color: hotpink;
 }
 
 .selectInput {
@@ -85,4 +84,14 @@ a:link, a:visited {
   border-radius: 10px;
   background-color: black;
   color: lightblue;
+}
+
+td {
+  padding-right: 10px;
+}
+
+.greenPanel {
+  padding: 10px;
+  border: 2px solid greenyellow;
+  border-radius: 10px;
 }

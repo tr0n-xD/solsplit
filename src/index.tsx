@@ -8,8 +8,8 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<App screen='welcome'/>}/>
-                <Route path="/create" element={<App screen='create'/>}/>
+                <Route path="/" element={<App view='welcome'/>}/>
+                <Route path="/create" element={<App view='create'/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,

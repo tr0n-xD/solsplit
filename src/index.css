@@ -3,16 +3,6 @@
   src: local('Bubbleboddy'), url(fonts/Bubbleboddy.ttf) format('truetype');
 }
 
-@font-face {
-  font-family: DiloWorld;
-  src: local('KingGaming'), url(fonts/KingGaming.otf) format('opentype');
-}
-
-@font-face {
-  font-family: KingGaming;
-  src: local('KingGaming'), url(fonts/KingGaming.otf) format('opentype');
-}
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
