@@ -27,9 +27,10 @@ export default function SolsplitCreate() {
     function createSolsplit() {
         setSending(true);
         // call the backend
-        if ('foo' === 'foo') return;
-        setSuccess(true);
-        setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
+        setSuccess(undefined);
+        setSolsplit(undefined);
+        // setSuccess(true);
+        // setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
     }
 
     return (
