@@ -4,7 +4,6 @@ import { Participant } from "../data/Types";
 import ParticipantEntry from "../components/participant/ParticipantEntry";
 import ParticipantSummary from "../components/participant/ParticipantSummary";
 import ParticipantIcons from "../components/participant/ParticipantIcons";
-import { chopIt } from "../data/Utils";
 
 export default function SolsplitCreate() {
     const [page, setPage] = useState(0);
@@ -28,8 +27,9 @@ export default function SolsplitCreate() {
     function createSolsplit() {
         setSending(true);
         // call the backend
-        // setSuccess(true);
-        // setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
+        if ('foo' === 'foo') return;
+        setSuccess(true);
+        setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
     }
 
     return (
