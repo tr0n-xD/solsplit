@@ -4,11 +4,14 @@ import { Participant } from "../data/Types";
 import ParticipantEntry from "../components/participant/ParticipantEntry";
 import ParticipantSummary from "../components/participant/ParticipantSummary";
 import ParticipantIcons from "../components/participant/ParticipantIcons";
+import { chopIt } from "../data/Utils";
 
 export default function SolsplitCreate() {
     const [page, setPage] = useState(0);
     const [teamSize, setTeamSize] = useState(2);
     const [sending, setSending] = useState<boolean | undefined>(undefined);
+    const [success, setSuccess] = useState<boolean | undefined>(undefined);
+    const [solsplit, setSolsplit] = useState<string | undefined>(undefined);
 
     let participants : Participant[] = [
         { id: 1, walletKey: 'ER897135jnskdfaq', name: 'Fred', share: 100 },
@@ -24,6 +27,9 @@ export default function SolsplitCreate() {
 
     function createSolsplit() {
         setSending(true);
+        // call the backend
+        // setSuccess(true);
+        // setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
     }
 
     return (
@@ -95,14 +101,22 @@ export default function SolsplitCreate() {
 
                     <ParticipantIcons teamSize={teamSize}/>
 
-                    <div className='flexColumn' style={{height: '20px', marginTop: '5px'}}>
-                        { sending ?
-                            <div>sending...</div> :
+                    <div className='flexColumn justifyStart' style={{height: '70px', marginTop: '5px'}}>
+                        {
+                            success && solsplit ?
+                                <div className='flexColumn'>
+                                    <div>Done! Your solsplit wallet is:</div>
+                                    <div className='flexRow gap5'>
+                                        <div style={{width: '18px'}}/>
+                                        <input className='textInput' maxLength={25} value={solsplit} style={{width: '200px'}}/>
+                                        <img alt='' title='Copy to clipboard' src='icon-copy.svg' onClick={() => navigator.clipboard.writeText(solsplit)}/>
+                                    </div>
+                                </div>
+                                :
+                            sending ? <div>sending...</div> :
                             <button className='blueButton' style={{marginTop: '10px'}} onClick={createSolsplit}>CREATE SOLSPLIT</button>
                         }
                     </div>
-
-                    <div style={{height: '45px'}}></div>
 
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <button className='blueButton' onClick={() => setPage(page-1)}>BACK</button>

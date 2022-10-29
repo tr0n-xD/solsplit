@@ -13,7 +13,7 @@ export default function SolsplitMain() {
 
             <div style={{marginTop: '20px'}}>This project was made for the MagicEden hackathon by tr0n-xD.</div>
 
-            <Link to='/create' style={{marginTop: '20px'}}><button className='blueButton'>CREATE SOLSPLIT</button></Link>
+            <Link to='/create' style={{marginTop: '20px'}}><button className='blueButton'>CREATE A SOLSPLIT</button></Link>
         </div>
     )
 }
