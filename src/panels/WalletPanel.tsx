@@ -1,5 +1,6 @@
 import * as React from "react";
 import { WalletContext } from "../App";
+import { Link } from "react-router-dom";
 
 export default function WalletPanel() {
     let wallet = React.useContext(WalletContext);
@@ -10,8 +11,10 @@ export default function WalletPanel() {
 
     return (
         <div className='flexRow' style={{}}>
+            <Link to='/'><button className='blueButton'>HOME</button></Link>
+
             {wallet.key ?
-                <div className='flexRow' style={{width: '100%', height: '32px', marginTop: '0px', backgroundColor: '#0052a1', borderRadius: '10px', padding: '0px 20px 0px 20px'}}>
+                <div className='flexRow' style={{width: '225px', height: '30px', marginTop: '0px', backgroundColor: '#0052a1', borderRadius: '10px'}}>
                     <img alt='' style={{marginTop: '0px', height: '20px', width:'20px'}} src='/phantom-32.png'/>
                     <div style={{fontSize: '16px'}}>{ wallet.key.slice(0,7) + ' ... ' + wallet.key.slice(-3) }</div>
                     <div title='sign out'>
@@ -21,7 +24,7 @@ export default function WalletPanel() {
                     </div>
                 </div>
                 :
-                <button className='blueButton' onClick={wallet.connect}>
+                <button className='blueButton' onClick={wallet.connect} style={{width: '225px'}}>
                     CONNECT WALLET
                 </button>
             }

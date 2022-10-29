@@ -110,9 +110,6 @@ export default function SolsplitCreate() {
                     </div>
                 </div>
             }
-
-
-            {/*<Link to='/' style={{marginTop: '50px'}}><button className='blueButton'>HOME</button></Link>*/}
         </div>
     )
 }
