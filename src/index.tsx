@@ -9,11 +9,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App screen='welcome'/>}/>
-                <Route path="/messages" element={<App screen='messages'/>}/>
-                <Route path="/send" element={<App screen='send'/>}/>
-                <Route path="/receipts" element={<App screen='receipts'/>}/>
-                <Route path="/topup" element={<App screen='topup'/>}/>
-                <Route path="/help" element={<App screen='help'/>}/>
+                <Route path="/create" element={<App screen='create'/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,

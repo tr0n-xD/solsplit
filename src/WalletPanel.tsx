@@ -24,7 +24,7 @@ export default function WalletPanel() {
                 <button className='blueButton'
                         style={{fontSize: "15px", width: '150px', padding: "5px 10px 5px 10px", borderRadius: "5px"}}
                         onClick={wallet.connect}>
-                    Connect Wallet
+                    CONNECT WALLET
                 </button>
             }
         </div>

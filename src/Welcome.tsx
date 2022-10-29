@@ -4,7 +4,7 @@ import WalletPanel from "./WalletPanel";
 import PanelMain from "./PanelMain";
 import { WalletContext } from "./App";
 import CreditPanel from "./CreditPanel";
-import PanelHelp from "./PanelHelp";
+import PanelCreate from "./PanelCreate";
 
 export default function Welcome(props: {panel: string}) {
     const wallet = React.useContext(WalletContext);
@@ -15,7 +15,7 @@ export default function Welcome(props: {panel: string}) {
                 <div className='headingText' style={{height: '60px'}}>SOLSPLIT</div>
                 { wallet.key ?
                     (   props.panel === 'main' ? <PanelMain/> :
-                        props.panel === 'help' ? <PanelHelp/> :
+                        props.panel === 'create' ? <PanelCreate/> :
                         <div>huh?</div>)
                     :
                     <div style={{height: '300px', width: '300px'}}>

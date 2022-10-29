@@ -1,11 +1,9 @@
-import { clusterApiUrl, Connection, PublicKey, Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
 import "./App.css";
 import Welcome from "./Welcome";
-import { Message } from "./Types";
-import { fn_url } from "./Config";
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -42,22 +40,14 @@ export interface Wallet {
   provider: any | undefined,
   connect: any | undefined,
   disconnect: any | undefined,
-  player: Player,
 }
 
-export interface Player {
-  sol: number | undefined,
-  messages: Message[] | undefined,
-}
 
 export const WalletContext = React.createContext<Wallet>(null!);
 
 export default function App(props: {screen: any}) {
   const [provider, setProvider] = useState<PhantomProvider | undefined>(undefined);
   const [walletKey, setWalletKey] = useState<string | undefined>(undefined);
-
-  const [sol, setSol] = useState<number | undefined>(undefined);
-  const [messages, setMessages] = useState<Message[] | undefined>(undefined);
 
   const getProvider = (): PhantomProvider | undefined => {
     if ("solana" in window) {
@@ -77,8 +67,6 @@ export default function App(props: {screen: any}) {
         let key = response.publicKey.toString();
         console.log("wallet account ", key);
         setWalletKey(key);
-        loadMessages(key);
-        loadSol(key);
       } catch (err) {
         // { code: 4001, message: 'User rejected the request.' }
       }
@@ -92,7 +80,6 @@ export default function App(props: {screen: any}) {
     if (walletKey && solana) {
       await (solana as PhantomProvider).disconnect();
       setWalletKey(undefined);
-      setSol(undefined);
     }
   };
 
@@ -108,37 +95,13 @@ export default function App(props: {screen: any}) {
     init();
   }, []);
 
-  const loadSol = async (walletKey: string) => {
-    console.log('looking up sol balance ', walletKey);
-    let connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
-    connection.getBalance(new PublicKey(walletKey)).then(function (value) {
-      setSol(Math.floor(value / 10000000) / 100);
-    })
-  };
-
-  const loadMessages = async (walletKey: string) => {
-    console.log('loading messages...');
-    setMessages(undefined);
-    let messages: Message[] = await fetch(fn_url + "messages?walletKey=" + walletKey).then(response => response.json());
-    setMessages(messages);
-  }
-
-  let player : Player = {
-    sol: sol,
-    messages: messages,
-  };
-
-  let wallet = {key: walletKey, provider: provider, connect: connectWallet, disconnect: disconnectWallet, player: player };
+  let wallet = {key: walletKey, provider: provider, connect: connectWallet, disconnect: disconnectWallet};
 
   return (
       <WalletContext.Provider value={wallet}>
           <div className="App">
             { (props.screen === 'welcome') && <Welcome panel='main'/> }
-            { (props.screen === 'messages') && <Welcome panel='messages'/> }
-            { (props.screen === 'send') && <Welcome panel='send'/> }
-            { (props.screen === 'receipts') && <Welcome panel='receipts'/> }
-            { (props.screen === 'topup') && <Welcome panel='topup'/> }
-            { (props.screen === 'help') && <Welcome panel='help'/> }
+            { (props.screen === 'create') && <Welcome panel='create'/> }
           </div>
       </WalletContext.Provider>
   );

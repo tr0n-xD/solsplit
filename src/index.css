@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: DiloWorld;
+  src: local('KingGaming'), url(fonts/KingGaming.otf) format('opentype');
+}
+
+@font-face {
   font-family: KingGaming;
   src: local('KingGaming'), url(fonts/KingGaming.otf) format('opentype');
 }
@@ -15,15 +20,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.menuButton {
-  font-family: Bubbleboddy;
-  font-size: 30px;
-  color: greenyellow;
-  background-color: #282c34;
-  border-radius: 10px;
-  padding-top: 5px;
 }
 
 .clickButton {

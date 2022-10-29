@@ -50,12 +50,12 @@ a:link, a:visited {
 }
 
 .blueButton {
-  width: 150px;
-  padding: 10px;
+  font-family: Bubbleboddy, sans-serif;
+  font-size: 15px;
+  padding: 5px 20px 5px 20px;
   border-radius: 20px;
   background-color: #0052a1;
   color: lightblue;
-  font-weight: bold;
 }
 
 .blueButton:hover {
