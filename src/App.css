@@ -1,0 +1,88 @@
+.App {
+  text-align: center;
+  background-color: #ff52cd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+a:link {text-decoration: none;}
+a:hover {text-decoration: underline; cursor: pointer}
+
+a:link, a:visited {
+  color: #61dafb;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.gap5 {
+  gap: 5px;
+}
+
+.alignStart {
+  align-items: flex-start;
+}
+
+.justifyStart {
+  justify-content: flex-start;
+}
+
+.blueButton {
+  width: 150px;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #0052a1;
+  color: lightblue;
+  font-weight: bold;
+}
+
+.blueButton:hover {
+  background-color: #014a8f;
+}
+
+
+.textInput {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  width: 220px;
+  padding: 3px;
+  border: solid 2px #48c5c8;
+  border-radius: 10px;
+  background-color: black;
+  color: lightblue;
+}
+
+.selectInput {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  width: 250px;
+  padding: 3px 3px 3px 23px;
+  border: solid 2px #48c5c8;
+  border-radius: 10px;
+  background-color: black;
+  color: lightblue;
+}
