@@ -3,9 +3,6 @@ import { WalletContext } from "./App";
 
 export default function PanelMain() {
     const wallet = React.useContext(WalletContext);
-    // const testMsg1 = {id: 1001, walletFrom: '111', walletTo: '999', aliasFrom: 'Steve', text: 'This is a really really cool message! Call me :)', status: 'SENT', dateSent: new Date(), dateRead: undefined, dateDeleted: undefined,}
-    // const testMsg2 = {id: 1002, walletFrom: '122', walletTo: '999', aliasFrom: 'John', text: 'Wow, this message system works! Awesome.', status: 'SENT', dateSent: new Date(), dateRead: undefined, dateDeleted: undefined,}
-    // const messages = [testMsg1, testMsg2];
     const messages = wallet.player.messages;
 
     return (

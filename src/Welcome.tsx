@@ -19,7 +19,7 @@ export default function Welcome(props: {panel: string}) {
                         <div>huh?</div>)
                     :
                     <div style={{height: '300px', width: '300px'}}>
-                        <img alt='nokia' src='/split.png' height='200px' style={{padding: '15px'}}/>
+                        <img alt='nokia' src='/solsplit.png' height='200px' style={{padding: '15px'}}/>
                         <div>Secure and easy royalty sharing for Solana :)</div>
                     </div>
                 }
