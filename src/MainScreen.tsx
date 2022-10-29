@@ -4,7 +4,6 @@ import WalletPanel from "./panels/WalletPanel";
 import SolsplitMain from "./views/SolsplitMain";
 import { WalletContext } from "./App";
 import SolsplitCreate from "./views/SolsplitCreate";
-import { Link } from "react-router-dom";
 
 export default function MainScreen(props: {view: string}) {
     const wallet = React.useContext(WalletContext);

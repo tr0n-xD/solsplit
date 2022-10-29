@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { WalletContext } from "../App";
 import { Link } from "react-router-dom";
 import { Participant } from "../data/Types";
 import ParticipantEntry from "../components/participant/ParticipantEntry";
@@ -96,7 +95,7 @@ export default function SolsplitCreate() {
 
                     <ParticipantIcons teamSize={teamSize}/>
 
-                    <div className='flexColumn' style={{height: '20px'}}>
+                    <div className='flexColumn' style={{height: '20px', marginTop: '5px'}}>
                         { sending ?
                             <div>sending...</div> :
                             <button className='blueButton' style={{marginTop: '10px'}} onClick={createSolsplit}>CREATE SOLSPLIT</button>

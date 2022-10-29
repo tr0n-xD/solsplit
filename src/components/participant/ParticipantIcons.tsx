@@ -1,4 +1,3 @@
-import { Participant } from "../../data/Types";
 import React from "react";
 
 export default function ParticipantIcons(props: { teamSize: number }) {
