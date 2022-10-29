@@ -1,6 +1,5 @@
 import React from "react";
 import { WalletContext } from "./App";
-import { Link } from "react-router-dom";
 
 export default function PanelMain() {
     const wallet = React.useContext(WalletContext);
