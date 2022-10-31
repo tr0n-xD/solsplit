@@ -4,10 +4,12 @@ import { Participant } from "../data/Types";
 import ParticipantEntry from "../components/participant/ParticipantEntry";
 import ParticipantSummary from "../components/participant/ParticipantSummary";
 import ParticipantIcons from "../components/participant/ParticipantIcons";
+import { ValidateParticipant } from "../data/Validator";
 
 export default function SolsplitCreate() {
     const [page, setPage] = useState(0);
     const [teamSize, setTeamSize] = useState(2);
+    const [errors, setErrors] = useState<string[]>([]);
     const [sending, setSending] = useState<boolean | undefined>(undefined);
     const [success, setSuccess] = useState<boolean | undefined>(undefined);
     const [solsplit, setSolsplit] = useState<string | undefined>(undefined);
@@ -42,7 +44,12 @@ export default function SolsplitCreate() {
     }
 
     function validateParticipants() {
-        setPage(page + 1);
+        let allErrors : string[] = [];
+        participants.forEach(x => allErrors = allErrors.concat(ValidateParticipant(x)));
+        setErrors(allErrors);
+        if (!allErrors.length) {
+            setPage(page + 1);
+        }
     }
 
     return (
@@ -76,6 +83,10 @@ export default function SolsplitCreate() {
 
                     <div className='flexColumn'>
                         {participants.map(x => <ParticipantEntry key={x.id} participant={x}/>)}
+                    </div>
+
+                    <div>
+                        {errors?.map(x => <div style={{color: 'red'}}>{x}</div>)}
                     </div>
 
                     <div className='flexRow' style={{marginTop: '10px'}}>

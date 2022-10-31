@@ -25,8 +25,7 @@ export default function ParticipantEntry(props: { participant: Participant }) {
                 <tr>
                     <td colSpan={2}>
                         <div className='flexRow' style={{marginBottom: '10px'}}>
-                            <img alt='' height='50px' width='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'}
-                                 style={{paddingTop: '5px'}}/>
+                            <img alt='' height='50px' width='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'} style={{paddingTop: '5px'}}/>
                             <div style={{fontWeight: 'bold'}}>Participant {id}</div>
                         </div>
                     </td>
@@ -39,7 +38,7 @@ export default function ParticipantEntry(props: { participant: Participant }) {
                 </tr>
                 <tr>
                     <td>Wallet:</td>
-                    <td><input className='textInput' maxLength={25} value={walletKey}
+                    <td><input className='textInput' maxLength={44} value={walletKey}
                                onChange={(e) => {setWalletKey(e.target.value); props.participant.walletKey = e.target.value}}/>
                     </td>
                 </tr>
