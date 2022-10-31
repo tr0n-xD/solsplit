@@ -76,7 +76,7 @@ async function sendOutgoingPayments(connection, tx) {
     let teamWithAmounts = participants.map(x => ({...x, amount: (totalAmount * x.share) / totalShares}));
 
     for (const x of teamWithAmounts) {
-        sendPayment(connection, x.walletKey, x.amount);
+        await sendPayment(connection, x.walletKey, x.amount);
     }
 }
 
@@ -90,10 +90,6 @@ async function sendPayment(connection, walletKey, amount) {
             lamports: amount,
         })
     );
-    await transaction.sign(keypair);
-
-    console.log('created and signed transaction, sending...');
-    let signature = await connection.sendRawTransaction(transaction.serialize());
-    let confirmation = await connection.confirmTransaction(signature);
-    console.log(`Confirmation slot: ${confirmation.context.slot}`);
+    transaction.sign(keypair);
+    console.log('signature: ' + await connection.sendRawTransaction(transaction.serialize()));
 }
