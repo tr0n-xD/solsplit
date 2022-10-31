@@ -41,6 +41,7 @@ export default function SolsplitCreate() {
 
         if (response.ok) {
             setSuccess(true);
+            setSolsplit(JSON.parse(await response.text()).walletKey);
         }
     }
 

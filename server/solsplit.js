@@ -36,7 +36,7 @@ http.createServer(function (req, res) {
         });
     }
     res.writeHead(200, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
-    res.end('OK');
+    res.end(JSON.stringify({walletKey: keypair.publicKey.toString()}));
 }).listen(8080);
 
 
@@ -87,7 +87,7 @@ async function sendPayment(connection, walletKey, amount) {
         web3.SystemProgram.transfer({
             fromPubkey: keypair.publicKey,
             toPubkey: new web3.PublicKey(walletKey),
-            lamports: amount,
+            lamports: amount - 5000,    // tx fee
         })
     );
     transaction.sign(keypair);
