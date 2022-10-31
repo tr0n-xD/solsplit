@@ -131,9 +131,10 @@ export default function SolsplitCreate() {
                                         <img alt='' title='Copy to clipboard' src='icon-copy.svg' onClick={() => navigator.clipboard.writeText(solsplit)}/>
                                     </div>
                                 </div>
-                                :
-                            sending ? <div>sending...</div> :
-                            <button className='blueButton' style={{marginTop: '10px'}} onClick={createSolsplit}>CREATE SOLSPLIT</button>
+                            : sending ?
+                                <div>sending...</div>
+                            :
+                                <button className='blueButton' style={{marginTop: '10px'}} onClick={createSolsplit}>CREATE SOLSPLIT</button>
                         }
                     </div>
 
