@@ -1,6 +1,6 @@
 {
   "name": "solsplit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
