@@ -11,17 +11,25 @@ export default function SolsplitCreate() {
     const [sending, setSending] = useState<boolean | undefined>(undefined);
     const [success, setSuccess] = useState<boolean | undefined>(undefined);
     const [solsplit, setSolsplit] = useState<string | undefined>(undefined);
-
-    let participants : Participant[] = [
-        { id: 1, walletKey: 'ER897135jnskdfaq', name: 'Fred', share: 100 },
-        { id: 2, walletKey: '7KFAKhgakjsghask', name: 'Alex', share: 100 },
-    ];
+    const [participants, setParticipants] = useState<Participant[]>([])
 
     function changeTeamSize(value: string) {
         let x = +value;
         if (x >= 2 && x <= 5) {
             setTeamSize(x);
         }
+    }
+
+    function createTeam() {
+        if (participants.length !== teamSize) {
+            setParticipants(Array.from(new Array(teamSize), (val, index) => ({
+                id: index + 1,
+                name: '',
+                walletKey: '',
+                share: 100,
+            })));
+        }
+        setPage(page + 1);
     }
 
     function createSolsplit() {
@@ -31,6 +39,10 @@ export default function SolsplitCreate() {
         setSolsplit(undefined);
         // setSuccess(true);
         // setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
+    }
+
+    function validateParticipants() {
+        setPage(page + 1);
     }
 
     return (
@@ -53,7 +65,7 @@ export default function SolsplitCreate() {
 
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <Link to='/'><button className='blueButton'>BACK</button></Link>
-                        <button className='blueButton' onClick={() => setPage(page+1)}>NEXT</button>
+                        <button className='blueButton' onClick={() => createTeam()}>NEXT</button>
                     </div>
                 </div>
             }
@@ -68,7 +80,7 @@ export default function SolsplitCreate() {
 
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <button className='blueButton' onClick={() => setPage(page-1)}>BACK</button>
-                        <button className='blueButton' onClick={() => setPage(page+1)}>NEXT</button>
+                        <button className='blueButton' onClick={() => validateParticipants()}>NEXT</button>
                     </div>
                 </div>
             }

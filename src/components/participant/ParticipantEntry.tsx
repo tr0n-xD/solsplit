@@ -1,8 +1,24 @@
 import { Participant } from "../../data/Types";
-import React from "react";
+import React, { useState } from "react";
 
 export default function ParticipantEntry(props: { participant: Participant }) {
+    let MIN_SHARE = 1, MAX_SHARE = 9999;
+    let [name, setName] = useState(props.participant.name);
+    let [walletKey, setWalletKey] = useState(props.participant.walletKey);
+    let [share, setShare] = useState(''+props.participant.share);
     let id = props.participant.id;
+
+    function changeShare(value: string) {
+        const regex = /^[0-9\b]+$/;
+        if (value === '' || regex.test(value)) {
+            setShare(value);
+        }
+        let x = +value;
+        if (x > MIN_SHARE && x <= MAX_SHARE) {
+            props.participant.share = x;
+        }
+    }
+
     return (
         <div className='greenPanel'>
             <table>
@@ -17,17 +33,21 @@ export default function ParticipantEntry(props: { participant: Participant }) {
                 </tr>
                 <tr>
                     <td>Name:</td>
-                    <td><input className='textInput' maxLength={25} value={props.participant.name}/></td>
+                    <td><input className='textInput' maxLength={25} value={name}
+                               onChange={(e) => {setName(e.target.value); props.participant.name = e.target.value}}/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Wallet:</td>
-                    <td><input className='textInput' maxLength={25} value={props.participant.walletKey}
-                        // onChange={(event) => props.participant.walletKey = (event.target.value)}
-                    /></td>
+                    <td><input className='textInput' maxLength={25} value={walletKey}
+                               onChange={(e) => {setWalletKey(e.target.value); props.participant.walletKey = e.target.value}}/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Share:</td>
-                    <td><input className='textInput' maxLength={4} value={props.participant.share}/></td>
+                    <td><input className='textInput' maxLength={4} value={share} pattern="[0-9]*"
+                               onChange={(e) => {changeShare(e.target.value)}}/>
+                    </td>
                 </tr>
             </table>
         </div>

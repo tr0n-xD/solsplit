@@ -9,7 +9,7 @@ export default function MainScreen(props: {view: string}) {
     const wallet = React.useContext(WalletContext);
     return (
         <div className="App">
-            <div className='flexColumn'>
+            <div className='flexColumn' style={{padding: '20px'}}>
                 <WalletPanel/>
                 <div className='headingText' style={{height: '60px'}}>SOLSPLIT</div>
                 { wallet.key ?
