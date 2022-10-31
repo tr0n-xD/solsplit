@@ -19,9 +19,6 @@ console.log('using keyfile: ' + keyfile);
 fs.readFile(keyfile, (err, data) => {
     if (err) throw err;
     keypair = web3.Keypair.fromSecretKey(new Uint8Array(JSON.parse(data.toString())));
-    // test web3
-    console.log(keypair.publicKey);
-    getTransactions(keypair.publicKey);
 });
 
 // start http server
@@ -35,6 +32,7 @@ http.createServer(function (req, res) {
             participants = JSON.parse(chunk.toString());
             console.log(participants);
             console.log('starting server process...');
+            getTransactions(keypair.publicKey);
         });
     }
     res.writeHead(200, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
@@ -43,21 +41,59 @@ http.createServer(function (req, res) {
 
 
 async function getTransactions(publicKey) {
+    console.log('getting transactions for: ' + publicKey.toString());
     console.log('connecting to ' + web3.clusterApiUrl('mainnet-beta'))
     const connection = new web3.Connection(web3.clusterApiUrl('mainnet-beta'), 'confirmed',);
     let tx_sigs = await connection.getSignaturesForAddress(new web3.PublicKey('7KQWkLzkCqvncLPxZufEoKcPo8Zyf3EmhJUXChukr5EZ'), {limit: 10});
     tx_sigs = tx_sigs.map(x => x.signature).slice(0, 1);        // TODO: remove slice
     // let tx = await connection.getTransactions(tx_sigs);
-    let tx = await connection.getTransactions(['4BYBoYx2ts85NYorq2HKJxVLN1JzGEetBzXXEmpgF7jkDMQnmPdCD9TwJvLMLhNDgyHGtqnEQ3c7hqUjpMAAtTy9']);
+    let tx = await connection.getTransactions(['7nWPcwHjckxjZHtJiH78miK3upPH5hNuN9S3VTA3gzuQKASEzY1TcySNHu6dytuiT4xW7Ce14ieLnZo2NbdRwo7']);
     console.log('found tx: ' + tx.length);
-    isIncomingPayment(tx[0]);
+    if (isIncomingPayment(tx[0])) {
+        sendOutgoingPayments(connection, tx[0]);
+    }
 
 }
 
 async function isIncomingPayment(tx) {
-    console.log('checking for an incoming payment...')
-    console.log('tx_sig: ' + tx.transaction.signatures);
-    console.log('wallet: ' + tx.transaction.message.accountKeys[1].toString());
+    console.log('checking tx: ' + tx.transaction.signatures)
     let delta = tx.meta.postBalances[1] - tx.meta.preBalances[1];
-    console.log('balance change: ' + delta / LAMPORTS_PER_SOL);
+    console.log('sol delta: ' + delta / LAMPORTS_PER_SOL);
+    if (delta > 0) {
+        console.log('> yes, this is an incoming payment.');
+        return true;
+    } else {
+        console.log('! not an incoming payment, ignoring...');
+        return false;
+    }
+}
+
+async function sendOutgoingPayments(connection, tx) {
+    if (!participants) return;
+    console.log('sending outgoing payments...');
+    let totalAmount = tx.meta.postBalances[1] - tx.meta.preBalances[1];
+    let totalShares = participants.reduce((sum, x) => sum + x.share, 0);
+    let teamWithAmounts = participants.map(x => ({...x, amount: (totalAmount * x.share) / totalShares}));
+
+    for (const x of teamWithAmounts) {
+        sendPayment(connection, x.walletKey, x.amount);
+    }
+}
+
+async function sendPayment(connection, walletKey, amount) {
+    console.log('sending ' + amount / LAMPORTS_PER_SOL + ' SOL to ' + walletKey + '...');
+    let transaction = new web3.Transaction({feePayer: keypair.publicKey, recentBlockhash: (await connection.getLatestBlockhash()).blockhash});
+    transaction.add(
+        web3.SystemProgram.transfer({
+            fromPubkey: keypair.publicKey,
+            toPubkey: new web3.PublicKey(walletKey),
+            lamports: amount,
+        })
+    );
+    await transaction.sign(keypair);
+
+    console.log('created and signed transaction, sending...');
+    let signature = await connection.sendRawTransaction(transaction.serialize());
+    let confirmation = await connection.confirmTransaction(signature);
+    console.log(`Confirmation slot: ${confirmation.context.slot}`);
 }
