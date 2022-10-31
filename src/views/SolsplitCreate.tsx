@@ -29,13 +29,19 @@ export default function SolsplitCreate() {
         setPage(page + 1);
     }
 
-    function createSolsplit() {
-        setSending(true);
-        // call the backend
-        setSuccess(undefined);
-        setSolsplit(undefined);
-        // setSuccess(true);
-        // setSolsplit('SPLT6Trvf2Xe5LqkCnfCuHoUEECzF7yRRmZ6aLubm7D');
+    async function createSolsplit() {
+        console.log('sending solsplit to server...');
+        // setSending(true);
+        var response = await fetch('http://localhost:8080/create', {
+            method: 'POST',
+            headers: {'Accept': 'application/json', 'Content-Type': 'text/plain'},
+            body: JSON.stringify(participants)
+        });
+        console.log('ok: ' + response.ok);
+
+        if (response.ok) {
+            setSuccess(true);
+        }
     }
 
     function validateParticipants() {
