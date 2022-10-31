@@ -24,12 +24,7 @@ export default function SolsplitCreate() {
 
     function createTeam() {
         if (participants.length !== teamSize) {
-            setParticipants(Array.from(new Array(teamSize), (val, index) => ({
-                id: index + 1,
-                name: '',
-                walletKey: '',
-                share: 100,
-            })));
+            setParticipants(Array.from(new Array(teamSize), (val, index) => ({id: index + 1, name: '', walletKey: '', share: 100,})));
         }
         setPage(page + 1);
     }
