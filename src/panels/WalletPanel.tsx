@@ -24,7 +24,8 @@ export default function WalletPanel() {
                     </div>
                 </div>
                 :
-                <button className='blueButton' onClick={wallet.connect} style={{width: '225px'}}>
+                <button className='blueButton flexRow' onClick={wallet.connect} style={{width: '225px'}}>
+                    <img alt='' style={{marginTop: '0px', height: '20px', width:'20px'}} src='/phantom-32.png'/>
                     CONNECT WALLET
                 </button>
             }

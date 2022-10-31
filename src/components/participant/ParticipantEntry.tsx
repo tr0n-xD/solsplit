@@ -9,7 +9,7 @@ export default function ParticipantEntry(props: { participant: Participant }) {
                 <tr>
                     <td colSpan={2}>
                         <div className='flexRow' style={{marginBottom: '10px'}}>
-                            <img alt='' height='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'}
+                            <img alt='' height='50px' width='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'}
                                  style={{paddingTop: '5px'}}/>
                             <div style={{fontWeight: 'bold'}}>Participant {id}</div>
                         </div>
