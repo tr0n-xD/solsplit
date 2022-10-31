@@ -67,7 +67,7 @@ export default function SolsplitCreate() {
 
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <Link to='/'><button className='blueButton'>BACK</button></Link>
-                        <button className='blueButton' onClick={() => createTeam()}>NEXT</button>
+                        <button className='blueButton' onClick={() => createTeam()}>CREATE A TEAM</button>
                     </div>
                 </div>
             }
@@ -81,7 +81,7 @@ export default function SolsplitCreate() {
                     </div>
 
                     <div>
-                        {errors?.map(x => <div style={{color: 'red'}}>{x}</div>)}
+                        {errors?.map((x,i) => <div key={i} style={{color: 'red'}}>{x}</div>)}
                     </div>
 
                     <div className='flexRow' style={{marginTop: '10px'}}>

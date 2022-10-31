@@ -22,32 +22,34 @@ export default function ParticipantEntry(props: { participant: Participant }) {
     return (
         <div className='greenPanel'>
             <table>
-                <tr>
-                    <td colSpan={2}>
-                        <div className='flexRow' style={{marginBottom: '10px'}}>
-                            <img alt='' height='50px' width='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'} style={{paddingTop: '5px'}}/>
-                            <div style={{fontWeight: 'bold'}}>Participant {id}</div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Name:</td>
-                    <td><input className='textInput' maxLength={25} value={name}
-                               onChange={(e) => {setName(e.target.value); props.participant.name = e.target.value}}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Wallet:</td>
-                    <td><input className='textInput' maxLength={44} value={walletKey}
-                               onChange={(e) => {setWalletKey(e.target.value); props.participant.walletKey = e.target.value}}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Share:</td>
-                    <td><input className='textInput' maxLength={4} value={share} pattern="[0-9]*"
-                               onChange={(e) => {changeShare(e.target.value)}}/>
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td colSpan={2}>
+                            <div className='flexRow' style={{marginBottom: '10px'}}>
+                                <img alt='' height='50px' width='50px' title={'Participant ' + id} src={'plr' + id + '-50.png'} style={{paddingTop: '5px'}}/>
+                                <div style={{fontWeight: 'bold'}}>Participant {id}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input className='textInput' maxLength={25} value={name}
+                                   onChange={(e) => {setName(e.target.value); props.participant.name = e.target.value}}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Wallet:</td>
+                        <td><input className='textInput' maxLength={44} value={walletKey}
+                                   onChange={(e) => {setWalletKey(e.target.value); props.participant.walletKey = e.target.value}}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Share:</td>
+                        <td><input className='textInput' maxLength={4} value={share} pattern="[0-9]*"
+                                   onChange={(e) => {changeShare(e.target.value)}}/>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     );
