@@ -11,5 +11,6 @@ export function ValidateParticipant(participant: Participant) {
     } catch (e : any) {
         errors.push(e.message);
     }
+    if (participant.share === 0) errors.push('Please enter a share');
     return errors;
 }

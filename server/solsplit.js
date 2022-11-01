@@ -59,11 +59,14 @@ async function isIncomingPayment(tx) {
     console.log('checking tx: ' + tx.transaction.signatures)
     let delta = tx.meta.postBalances[1] - tx.meta.preBalances[1];
     console.log('sol delta: ' + delta / LAMPORTS_PER_SOL);
-    if (delta > 0) {
+    if (delta > 0.001) {
         console.log('> yes, this is an incoming payment.');
         return true;
+    } else if (delta > 0) {
+        console.log('! payment is below minimum amount: 0.001 SOL, ignoring.');
+        return true;
     } else {
-        console.log('! not an incoming payment, ignoring...');
+        console.log('! not an incoming payment, ignoring.');
         return false;
     }
 }
@@ -71,9 +74,9 @@ async function isIncomingPayment(tx) {
 async function sendOutgoingPayments(connection, tx) {
     if (!participants) return;
     console.log('sending outgoing payments...');
-    let totalAmount = tx.meta.postBalances[1] - tx.meta.preBalances[1];
+    let totalAmount = Math.trunc((tx.meta.postBalances[1] - tx.meta.preBalances[1]) * 0.98);    // 2% commission
     let totalShares = participants.reduce((sum, x) => sum + x.share, 0);
-    let teamWithAmounts = participants.map(x => ({...x, amount: (totalAmount * x.share) / totalShares}));
+    let teamWithAmounts = participants.map(x => ({...x, amount: Math.trunc((totalAmount * x.share) / totalShares)}));
 
     for (const x of teamWithAmounts) {
         await sendPayment(connection, x.walletKey, x.amount);
@@ -87,7 +90,7 @@ async function sendPayment(connection, walletKey, amount) {
         web3.SystemProgram.transfer({
             fromPubkey: keypair.publicKey,
             toPubkey: new web3.PublicKey(walletKey),
-            lamports: amount - 5000,    // tx fee
+            lamports: amount,
         })
     );
     transaction.sign(keypair);

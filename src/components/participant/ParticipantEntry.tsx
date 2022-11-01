@@ -10,12 +10,12 @@ export default function ParticipantEntry(props: { participant: Participant }) {
 
     function changeShare(value: string) {
         const regex = /^[0-9\b]+$/;
-        if (value === '' || regex.test(value)) {
-            setShare(value);
-        }
+        if (value === '' || regex.test(value)) { setShare(value); }
         let x = +value;
-        if (x > MIN_SHARE && x <= MAX_SHARE) {
+        if (x >= MIN_SHARE && x <= MAX_SHARE) {
             props.participant.share = x;
+        } else if (value === '') {
+            props.participant.share = 0;
         }
     }
 
@@ -45,8 +45,8 @@ export default function ParticipantEntry(props: { participant: Participant }) {
                     </tr>
                     <tr>
                         <td>Share:</td>
-                        <td><input className='textInput' maxLength={4} value={share} pattern="[0-9]*"
-                                   onChange={(e) => {changeShare(e.target.value)}}/>
+                        <td><input className='textInput' maxLength={4} value={share} id={'share-' + id}
+                                   onChange={(e) => {console.log(e.target.value); changeShare(e.target.value)}}/>
                         </td>
                     </tr>
                 </tbody>
