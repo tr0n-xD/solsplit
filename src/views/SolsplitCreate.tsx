@@ -135,7 +135,7 @@ export default function SolsplitCreate() {
                                 <div className='flexColumn'>
                                     <div>Done! Your solsplit wallet is:</div>
                                     <div className='flexRow gap5'>
-                                        <a target='solscan' href={'https://solscan.io/account/' + solsplit}><img alt='' src='solscan.png'/></a>
+                                        <a target='solscan' href={'https://solscan.io/account/' + solsplit}><img alt='' title='View on solscan.io' src='solscan.png'/></a>
                                         <input className='textInput' maxLength={25} value={solsplit} style={{width: '200px'}}/>
                                         <img alt='' title='Copy to clipboard' src='icon-copy.svg' onClick={() => navigator.clipboard.writeText(solsplit)}/>
                                     </div>
