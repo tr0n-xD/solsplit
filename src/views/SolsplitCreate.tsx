@@ -31,7 +31,7 @@ export default function SolsplitCreate() {
 
     async function createSolsplit() {
         console.log('sending solsplit to server...');
-        // setSending(true);
+        setSending(true);
         var response = await fetch('http://localhost:8080/create', {
             method: 'POST',
             headers: {'Accept': 'application/json', 'Content-Type': 'text/plain'},
@@ -42,6 +42,8 @@ export default function SolsplitCreate() {
         if (response.ok) {
             setSuccess(true);
             setSolsplit(JSON.parse(await response.text()).walletKey);
+        } else {
+            console.log('failed!');
         }
     }
 
@@ -133,7 +135,7 @@ export default function SolsplitCreate() {
                                 <div className='flexColumn'>
                                     <div>Done! Your solsplit wallet is:</div>
                                     <div className='flexRow gap5'>
-                                        <div style={{width: '18px'}}/>
+                                        <a target='solscan' href={'https://solscan.io/account/' + solsplit}><img alt='' src='solscan.png'/></a>
                                         <input className='textInput' maxLength={25} value={solsplit} style={{width: '200px'}}/>
                                         <img alt='' title='Copy to clipboard' src='icon-copy.svg' onClick={() => navigator.clipboard.writeText(solsplit)}/>
                                     </div>
