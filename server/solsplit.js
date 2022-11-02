@@ -3,6 +3,8 @@ var fs = require('fs');
 const web3 = require("@solana/web3.js");
 const {LAMPORTS_PER_SOL} = require("@solana/web3.js");
 
+let MINIMUM_AMOUNT_SOL = 0.001;
+let COMMISSION_PCT = 10;
 let participants;
 let keypair;
 
@@ -24,14 +26,14 @@ fs.readFile(keyfile, (err, data) => {
 // start http server
 console.log('starting http server on http://localhost:8080/create...');
 http.createServer(function (req, res) {
-    console.log('req from ' + req.url);
+    console.log('request from solsplit frontend (url: /create)');
     if (req.url !== '/create') return;
     if (req.method === 'POST') {
         req.on('data', function(chunk) {
-            console.log("Received body data:");
+            console.log("Received data:");
             participants = JSON.parse(chunk.toString());
             console.log(participants);
-            console.log('starting server process...');
+            console.log('solsplit is now configured!');
         });
     }
     res.writeHead(200, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
@@ -52,30 +54,27 @@ async function getTransactions(publicKey) {
     console.log('Found: ' + tx_sigs.length + ' new signatures.');
     lastSignature = tx_sigs[0].signature;
     tx_sigs = tx_sigs.map(x => x.signature);
-    console.log(tx_sigs);
-    let transactions = await Promise.all(tx_sigs.map(x => connection.getTransactions(tx_sigs)));
-    console.log(transactions);
-    // let tx = await connection.getTransactions(tx_sigs);
-    // let tx = await connection.getTransactions(['7nWPcwHjckxjZHtJiH78miK3upPH5hNuN9S3VTA3gzuQKASEzY1TcySNHu6dytuiT4xW7Ce14ieLnZo2NbdRwo7']);
-    // let tx2 = await connection.getTransactions(['32uMyN5gVNwv5myuNpqtpATcJWA5nbii8ZWG7Fj4jFj679WFXbiC4Fy7shxASUV75Gapuz4hCR4q4wCHvWfsXUi']);
-    // console.log('found tx: ' + tx.length);
-    // if (isIncomingPayment(tx[0])) {
-        // sendOutgoingPayments(connection, tx[0]);
-    // }
+    let transactions = await Promise.all(tx_sigs.map(x => connection.getTransactions([x])));
+    transactions = transactions.map(arr => arr[0]).reverse();
+    for (const tx of transactions) {
+        if (isIncomingPayment(tx)) {
+            sendOutgoingPayments(connection, tx);
+        }
+    }
 }
 
-setInterval(() => getTransactions(keypair.publicKey), 3000);
+setInterval(() => getTransactions(keypair.publicKey), 20000);
 
 async function isIncomingPayment(tx) {
-    console.log('checking tx: ' + tx.transaction.signatures)
+    console.log('checking tx: ' + tx.transaction.signatures);
     let delta = tx.meta.postBalances[1] - tx.meta.preBalances[1];
     console.log('sol delta: ' + delta / LAMPORTS_PER_SOL);
-    if (delta > 0.001) {
+    if (delta >= MINIMUM_AMOUNT_SOL) {
         console.log('> yes, this is an incoming payment.');
         return true;
     } else if (delta > 0) {
-        console.log('! payment is below minimum amount: 0.001 SOL, ignoring.');
-        return true;
+        console.log('! payment is below minimum amount: ' + MINIMUM_AMOUNT_SOL + ' SOL, ignoring.');
+        return false;
     } else {
         console.log('! not an incoming payment, ignoring.');
         return false;
@@ -83,9 +82,12 @@ async function isIncomingPayment(tx) {
 }
 
 async function sendOutgoingPayments(connection, tx) {
-    if (!participants) return;
+    if (!participants) {
+        console.log('No participatns to send to! Run solsplit frontend.');
+        return;
+    }
     console.log('sending outgoing payments...');
-    let totalAmount = Math.trunc((tx.meta.postBalances[1] - tx.meta.preBalances[1]) * 0.98);    // 2% commission
+    let totalAmount = Math.trunc((tx.meta.postBalances[1] - tx.meta.preBalances[1]) * (100-COMMISSION_PCT) / 100);
     let totalShares = participants.reduce((sum, x) => sum + x.share, 0);
     let teamWithAmounts = participants.map(x => ({...x, amount: Math.trunc((totalAmount * x.share) / totalShares)}));
 
