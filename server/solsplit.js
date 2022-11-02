@@ -4,7 +4,7 @@ const web3 = require("@solana/web3.js");
 const {LAMPORTS_PER_SOL} = require("@solana/web3.js");
 
 let MINIMUM_AMOUNT_SOL = 0.001;
-let COMMISSION_PCT = 10;
+let COMMISSION_PCT = 1;
 let participants;
 let keypair;
 

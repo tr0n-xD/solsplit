@@ -122,7 +122,7 @@ export default function SolsplitCreate() {
 
                     <div>If the royalty shares are correct, let's go ahead and create the solsplit for your team.</div>
 
-                    <div>Solsplit takes a 2% commission :)</div>
+                    <div>Solsplit takes a 1% commission :)</div>
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <button className='blueButton' onClick={() => setPage(page-1)}>BACK</button>
                         <button className='blueButton' onClick={() => {setSolsplit(undefined); setSending(undefined); setPage(page+1)}}>READY - LET'S DO THIS</button>
