@@ -8,7 +8,7 @@ let COMMISSION_PCT = 10;
 let participants;
 let keypair;
 
-console.log('*** Welcome to Solsplit server v1.0.0 ***')
+console.log('*** welcome to Solsplit server v1.0.0 ***')
 
 // locate the keyfile and make keypair
 let files = fs.readdirSync('.').filter(x => x.startsWith('SPL'));
@@ -65,20 +65,14 @@ async function getTransactions(publicKey) {
 
 setInterval(() => getTransactions(keypair.publicKey), 20000);
 
-async function isIncomingPayment(tx) {
+function isIncomingPayment(tx) {
     console.log('checking tx: ' + tx.transaction.signatures);
-    let delta = tx.meta.postBalances[1] - tx.meta.preBalances[1];
-    console.log('sol delta: ' + delta / LAMPORTS_PER_SOL);
-    if (delta >= MINIMUM_AMOUNT_SOL) {
-        console.log('> yes, this is an incoming payment.');
-        return true;
-    } else if (delta > 0) {
-        console.log('! payment is below minimum amount: ' + MINIMUM_AMOUNT_SOL + ' SOL, ignoring.');
-        return false;
-    } else {
-        console.log('! not an incoming payment, ignoring.');
-        return false;
-    }
+    if (!tx.meta.logMessages.includes('Program 11111111111111111111111111111111 success')) return false;
+    if (tx.transaction.message.accountKeys[1].toString() !== keypair.publicKey.toString()) return false;
+    if (tx.transaction.message.accountKeys[2].toString() !== '11111111111111111111111111111111') return false;
+    if (tx.meta.postBalances[1] - tx.meta.preBalances[1] < MINIMUM_AMOUNT_SOL) return false;
+    console.log('> yes, this is an incoming payment.');
+    return true;
 }
 
 async function sendOutgoingPayments(connection, tx) {
