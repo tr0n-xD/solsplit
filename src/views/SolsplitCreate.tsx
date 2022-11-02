@@ -29,6 +29,14 @@ export default function SolsplitCreate() {
         setPage(page + 1);
     }
 
+    function createTestData() {
+        setParticipants([
+            {id: 1, name: 'Steve', walletKey: '7KQWkLzkCqvncLPxZufEoKcPo8Zyf3EmhJUXChukr5EZ', share: 99},
+            {id: 2, name: 'Alex', walletKey: 'ERt2rfZvK1GQtkBbe1GTsQoRbchW9WyUFmE8ShRLSWyE', share: 1},
+        ]);
+        setPage(page + 1);
+    }
+
     async function createSolsplit() {
         console.log('sending solsplit to server...');
         setSending(true);
@@ -78,6 +86,7 @@ export default function SolsplitCreate() {
                     <div className='flexRow' style={{marginTop: '10px'}}>
                         <Link to='/'><button className='blueButton'>BACK</button></Link>
                         <button className='blueButton' onClick={() => createTeam()}>CREATE A TEAM</button>
+                        <button className='blueButton' onClick={() => createTestData()}>TESTDATA</button>
                     </div>
                 </div>
             }

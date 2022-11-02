@@ -1,4 +1,5 @@
 server/SPL*.json
+server/wallets
 
 # IDE etc
 .idea

@@ -32,28 +32,39 @@ http.createServer(function (req, res) {
             participants = JSON.parse(chunk.toString());
             console.log(participants);
             console.log('starting server process...');
-            getTransactions(keypair.publicKey);
         });
     }
     res.writeHead(200, {'Content-Type': 'text/plain', 'access-control-allow-origin': '*'});
     res.end(JSON.stringify({walletKey: keypair.publicKey.toString()}));
 }).listen(8080);
 
+let lastSignature = null;
 
 async function getTransactions(publicKey) {
-    console.log('getting transactions for: ' + publicKey.toString());
-    console.log('connecting to ' + web3.clusterApiUrl('mainnet-beta'))
+    if (!keypair) return;
+    console.log('\ngetting signatures for: ' + publicKey.toString() + ' after : ' + (lastSignature ? lastSignature.slice(0, 6) + '....' : 'start'));
     const connection = new web3.Connection(web3.clusterApiUrl('mainnet-beta'), 'confirmed',);
-    let tx_sigs = await connection.getSignaturesForAddress(new web3.PublicKey('7KQWkLzkCqvncLPxZufEoKcPo8Zyf3EmhJUXChukr5EZ'), {limit: 10});
-    tx_sigs = tx_sigs.map(x => x.signature).slice(0, 1);        // TODO: remove slice
-    // let tx = await connection.getTransactions(tx_sigs);
-    let tx = await connection.getTransactions(['7nWPcwHjckxjZHtJiH78miK3upPH5hNuN9S3VTA3gzuQKASEzY1TcySNHu6dytuiT4xW7Ce14ieLnZo2NbdRwo7']);
-    console.log('found tx: ' + tx.length);
-    if (isIncomingPayment(tx[0])) {
-        sendOutgoingPayments(connection, tx[0]);
+    let tx_sigs = await connection.getSignaturesForAddress(new web3.PublicKey(keypair.publicKey), {limit: 10, until: lastSignature});
+    if (tx_sigs.length === 0) {
+        console.log('No new signatures.');
+        return;
     }
-
+    console.log('Found: ' + tx_sigs.length + ' new signatures.');
+    lastSignature = tx_sigs[0].signature;
+    tx_sigs = tx_sigs.map(x => x.signature);
+    console.log(tx_sigs);
+    let transactions = await Promise.all(tx_sigs.map(x => connection.getTransactions(tx_sigs)));
+    console.log(transactions);
+    // let tx = await connection.getTransactions(tx_sigs);
+    // let tx = await connection.getTransactions(['7nWPcwHjckxjZHtJiH78miK3upPH5hNuN9S3VTA3gzuQKASEzY1TcySNHu6dytuiT4xW7Ce14ieLnZo2NbdRwo7']);
+    // let tx2 = await connection.getTransactions(['32uMyN5gVNwv5myuNpqtpATcJWA5nbii8ZWG7Fj4jFj679WFXbiC4Fy7shxASUV75Gapuz4hCR4q4wCHvWfsXUi']);
+    // console.log('found tx: ' + tx.length);
+    // if (isIncomingPayment(tx[0])) {
+        // sendOutgoingPayments(connection, tx[0]);
+    // }
 }
+
+setInterval(() => getTransactions(keypair.publicKey), 3000);
 
 async function isIncomingPayment(tx) {
     console.log('checking tx: ' + tx.transaction.signatures)
