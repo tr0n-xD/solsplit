@@ -5,6 +5,7 @@ const {LAMPORTS_PER_SOL} = require("@solana/web3.js");
 
 let MINIMUM_AMOUNT_SOL = 0.001;
 let COMMISSION_PCT = 1;
+let lastSignature;
 let participants;
 let keypair;
 
@@ -21,6 +22,14 @@ console.log('using keyfile: ' + keyfile);
 fs.readFile(keyfile, (err, data) => {
     if (err) throw err;
     keypair = web3.Keypair.fromSecretKey(new Uint8Array(JSON.parse(data.toString())));
+});
+
+// check for the last signature
+fs.readFile('lastSignature.txt', (err, data) => {
+    if (!err) {
+        lastSignature = data.toString().trim();
+        console.log('lastSignature was: ' + lastSignature);
+    }
 });
 
 // start http server
@@ -40,8 +49,6 @@ http.createServer(function (req, res) {
     res.end(JSON.stringify({walletKey: keypair.publicKey.toString()}));
 }).listen(8080);
 
-let lastSignature = null;
-
 async function getTransactions(publicKey) {
     if (!keypair) return;
     console.log('\ngetting signatures for: ' + publicKey.toString() + ' after : ' + (lastSignature ? lastSignature.slice(0, 6) + '....' : 'start'));
@@ -53,6 +60,7 @@ async function getTransactions(publicKey) {
     }
     console.log('Found: ' + tx_sigs.length + ' new signatures.');
     lastSignature = tx_sigs[0].signature;
+    fs.writeFileSync('lastSignature.txt', lastSignature);
     tx_sigs = tx_sigs.map(x => x.signature);
     let transactions = await Promise.all(tx_sigs.map(x => connection.getTransactions([x])));
     transactions = transactions.map(arr => arr[0]).reverse();

@@ -1,5 +1,6 @@
 server/SPL*.json
 server/wallets
+server/lastSignature.txt
 
 # IDE etc
 .idea
