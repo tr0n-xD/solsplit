@@ -35,15 +35,7 @@ export interface PhantomProvider {
   request: (method: PhantomRequestMethod, params: any) => Promise<unknown>;
 }
 
-export interface Wallet {
-  key: string | undefined,
-  provider: any | undefined,
-  connect: any | undefined,
-  disconnect: any | undefined,
-}
-
-
-export const WalletContext = React.createContext<Wallet>(null!);
+export const KeyContext = React.createContext<string | undefined>(null!);
 
 export default function App(props: {view: any}) {
   const [provider, setProvider] = useState<PhantomProvider | undefined>(undefined);
@@ -95,14 +87,12 @@ export default function App(props: {view: any}) {
     init();
   }, []);
 
-  let wallet = {key: walletKey, provider: provider, connect: connectWallet, disconnect: disconnectWallet};
-
   return (
-      <WalletContext.Provider value={wallet}>
+      <KeyContext.Provider value={walletKey}>
           <div className="App">
-            { (props.view === 'welcome') && <MainScreen view='main'/> }
-            { (props.view === 'create') && <MainScreen view='create'/> }
+            { (props.view === 'welcome') && <MainScreen view='main' connect={connectWallet} disconnect={disconnectWallet}/> }
+            { (props.view === 'create') && <MainScreen view='create' connect={connectWallet} disconnect={disconnectWallet}/> }
           </div>
-      </WalletContext.Provider>
+      </KeyContext.Provider>
   );
 }

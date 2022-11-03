@@ -2,17 +2,17 @@ import React from 'react';
 import './App.css';
 import WalletPanel from "./panels/WalletPanel";
 import SolsplitMain from "./views/SolsplitMain";
-import { WalletContext } from "./App";
 import SolsplitCreate from "./views/SolsplitCreate";
+import { KeyContext } from "./App";
 
-export default function MainScreen(props: {view: string}) {
-    const wallet = React.useContext(WalletContext);
+export default function MainScreen(props: {view: string, connect: any, disconnect: any}) {
+    const walletKey = React.useContext(KeyContext);
     return (
         <div className="App">
             <div className='flexColumn' style={{padding: '20px'}}>
-                <WalletPanel/>
+                <WalletPanel connect={props.connect} disconnect={props.disconnect}/>
                 <div className='headingText' style={{height: '60px'}}>SOLSPLIT</div>
-                { wallet.key ?
+                { walletKey ?
                     (   props.view === 'main' ? <SolsplitMain/> :
                         props.view === 'create' ? <SolsplitCreate/> :
                         <div>huh?</div>)
@@ -22,7 +22,6 @@ export default function MainScreen(props: {view: string}) {
                         <div>Secure and easy royalty sharing for Solana :)</div>
                     </div>
                 }
-                {/*<CreditPanel/>*/}
             </div>
         </div>
     );
