@@ -1,6 +1,6 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import "./App.css";
 import MainScreen from "./MainScreen";
@@ -38,16 +38,7 @@ export interface PhantomProvider {
 export const KeyContext = React.createContext<string | undefined>(null!);
 
 export default function App(props: {view: any}) {
-  const [provider, setProvider] = useState<PhantomProvider | undefined>(undefined);
   const [walletKey, setWalletKey] = useState<string | undefined>(undefined);
-
-  const getProvider = (): PhantomProvider | undefined => {
-    if ("solana" in window) {
-      // @ts-ignore
-      const provider = window.solana as any;
-      if (provider.isPhantom) return provider as PhantomProvider;
-    }
-  };
 
   const connectWallet = async () => {
     // @ts-ignore
@@ -74,18 +65,6 @@ export default function App(props: {view: any}) {
       setWalletKey(undefined);
     }
   };
-
-  // detect phantom provider exists
-  useEffect(() => {
-    const init = async () => {
-      const provider = getProvider();
-      if (provider) {
-        // await connectWallet();
-        setProvider(provider);
-      } else setProvider(undefined);
-    }
-    init();
-  }, []);
 
   return (
       <KeyContext.Provider value={walletKey}>
