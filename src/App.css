@@ -1,3 +1,17 @@
+@font-face {
+  font-family: Bubbleboddy;
+  src: local('Bubbleboddy'), url(fonts/Bubbleboddy.ttf) format('truetype');
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .App {
   text-align: center;
   background-color: #ff52cd;
@@ -10,8 +24,10 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.headingText {
+  font-family: Bubbleboddy;
+  font-size: 75px;
+  color: greenyellow;
 }
 
 a:link {text-decoration: none;}
@@ -72,18 +88,6 @@ a:link, a:visited {
   border-radius: 10px;
   background-color: greenyellow;
   color: hotpink;
-}
-
-.selectInput {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  width: 250px;
-  padding: 3px 3px 3px 23px;
-  border: solid 2px #48c5c8;
-  border-radius: 10px;
-  background-color: black;
-  color: lightblue;
 }
 
 td {
