@@ -4,10 +4,12 @@ Royalty sharing app for solana, made by tr0n_xD#6641, for MagicEden hackathon :)
 
 This app consists of a frontend and a backend.
 
-Please watch the Solsplit demo at https://www.youtube.com/watch?v=8rDZctLgxao 
+Please watch the Solsplit demo at https://www.youtube.com/watch?v=8rDZctLgxao
+
+You can use also use the frontend at: https://solsplit.io (note: the backend must be running locallt for this to work, see below)
 
 ## 1. Set up and run the backend
-a
+
 Clone this repo and open a command line at server/
 
 Run the command: ./grindkey.sh
