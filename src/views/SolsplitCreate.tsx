@@ -31,8 +31,8 @@ export default function SolsplitCreate() {
 
     function createTestData() {
         setParticipants([
-            {id: 1, name: 'Steve', walletKey: '7KQWkLzkCqvncLPxZufEoKcPo8Zyf3EmhJUXChukr5EZ', share: 99},
-            {id: 2, name: 'Alex', walletKey: 'ERt2rfZvK1GQtkBbe1GTsQoRbchW9WyUFmE8ShRLSWyE', share: 1},
+            {id: 1, name: 'Tr0n', walletKey: '7KQWkLzkCqvncLPxZufEoKcPo8Zyf3EmhJUXChukr5EZ', share: 50},
+            {id: 2, name: 'Alex', walletKey: 'ERt2rfZvK1GQtkBbe1GTsQoRbchW9WyUFmE8ShRLSWyE', share: 50},
         ]);
         setPage(page + 1);
     }
