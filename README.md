@@ -1,14 +1,35 @@
 # SOLSPLIT.io
 
-Royalty sharing app for solana, made by tr0n_xD#6641, for MagicEden hackathon :) 
+Royalty sharing app for Solana, made by Tr0n from Restack.AI for MagicEden Hackathon :) 
 
-This app consists of a frontend and a backend.
+## 1. Submission
 
-Please watch the Solsplit demo at https://www.youtube.com/watch?v=8rDZctLgxao
+Project name: "Solsplit", team members: "Tr0n".
 
-You can use also use the frontend at: https://solsplit.io (note: the backend must be running locallt for this to work, see below)
+Description of project: Solsplit is a safe and secure royalty sharing app for Solana.
 
-## 1. Set up and run the backend
+I imagined an easy way for teams to receive royalty payments, and those payments would
+be automatically split and dispursed to the team members in the percentages they agreed.
+Hopefully, Solsplit can help with dynamic royalty sharing for teams in the future :)
+
+Demo video: Please watch the Solsplit demo at https://www.youtube.com/watch?v=8rDZctLgxao
+
+Access to github: https://github.com/tr0n-xD/solsplit
+
+Working application: You can use also use the frontend at: https://solsplit.io
+(note: the backend must be running locally for this to work, see below)
+
+## 2. Technical architecture
+
+Frontend - React
+Backend - node
+Web3 - solana, web3, metaplex
+
+Please first set up and run the node solsplit backend locally on localhost:8080.
+
+Then, go to solsplit.io and test the frontend.
+
+## 3. Set up and run the backend
 
 Clone this repo and open a command line at server/
 
@@ -17,7 +38,7 @@ This will set up a keypair starting with "SPL" for use by the application. Keep 
 
 Now run the command: node solsplit.js
 
-## 2. Run the frontend
+## 4. Run the frontend
 
 Build the frontend: npm install
 
@@ -30,7 +51,7 @@ Once this is successful, you can copy the solsplit public wallet address from th
 
 Now, solsplit is running and ready for use :)
 
-## 3. Send a payment
+## 5. Send a payment
 
 Send a small payment (e.g. 0.01 SOL) to the SPL* wallet address.
 
@@ -43,7 +64,7 @@ To verify that solsplit is working properly, look at SOL transfers on the accoun
 
 E.g.: https://solscan.io/account/SPLhaiLwHYVzLS9739CAX9cShr4pxzPje28b4EhBoMS#solTransfers
 
-## 4. Tidy up
+## 6. Tidy up
 
 You can look at the SPL*.json file to find the private key for the solsplit wallet.
 
